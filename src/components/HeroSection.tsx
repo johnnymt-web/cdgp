@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Compass, Target, Sparkles } from "lucide-react";
+import { ArrowRight, Compass, Target, Sparkles, GraduationCap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
@@ -18,23 +18,35 @@ const HeroSection = () => {
         <div className="flex flex-col items-center text-center space-y-8 animate-fade-in">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Discover Your Career Path</span>
+            <GraduationCap className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">For 9th–12th Grade Students</span>
           </div>
 
           {/* Main heading */}
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight max-w-4xl">
-            Find Your{" "}
-            <span className="text-gradient italic">Perfect</span>
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight max-w-5xl">
+            Career{" "}
+            <span className="text-gradient italic">Development</span>
             <br />
-            Career Match
+            Guidance Program
           </h1>
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            Take the John Holland RIASEC Career Assessment to uncover your unique personality type 
-            and discover careers that align with your natural interests and strengths.
+            A comprehensive assessment combining John Holland's RIASEC career interests with 
+            Donald Super's career readiness framework—designed specifically for high school students.
           </p>
+
+          {/* Two Test Badges */}
+          <div className="flex flex-wrap justify-center gap-4 pt-2">
+            <div className="flex items-center gap-2 px-4 py-2 bg-card rounded-full card-shadow">
+              <Compass className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium">Holland Interest Assessment</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 bg-card rounded-full card-shadow">
+              <Target className="w-4 h-4 text-accent" />
+              <span className="text-sm font-medium">Super Career Readiness</span>
+            </div>
+          </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -53,17 +65,21 @@ const HeroSection = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 md:gap-16 pt-12 mt-8 border-t border-border/50">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 pt-12 mt-8 border-t border-border/50">
             <div className="flex flex-col items-center gap-1">
-              <span className="text-3xl md:text-4xl font-display text-foreground">42</span>
+              <span className="text-3xl md:text-4xl font-display text-foreground">62</span>
               <span className="text-sm text-muted-foreground">Questions</span>
             </div>
             <div className="flex flex-col items-center gap-1">
-              <span className="text-3xl md:text-4xl font-display text-foreground">6</span>
-              <span className="text-sm text-muted-foreground">Personality Types</span>
+              <span className="text-3xl md:text-4xl font-display text-foreground">2</span>
+              <span className="text-sm text-muted-foreground">Assessments</span>
             </div>
             <div className="flex flex-col items-center gap-1">
-              <span className="text-3xl md:text-4xl font-display text-foreground">~5</span>
+              <span className="text-3xl md:text-4xl font-display text-foreground">11</span>
+              <span className="text-sm text-muted-foreground">Dimensions</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-3xl md:text-4xl font-display text-foreground">~10</span>
               <span className="text-sm text-muted-foreground">Minutes</span>
             </div>
           </div>
