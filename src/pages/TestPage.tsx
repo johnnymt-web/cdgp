@@ -164,23 +164,25 @@ const TestPage = () => {
             )}
           </div>
 
-          {/* Quick navigation dots */}
-          <div className="flex flex-wrap justify-center gap-2 mt-8">
-            {currentQuestions.map((q, index) => (
-              <button
-                key={q.id}
-                onClick={() => setCurrentQuestionIndex(index)}
-                className={`w-8 h-8 rounded-full text-xs font-medium transition-all ${
-                  index === currentQuestionIndex
-                    ? 'hero-gradient text-primary-foreground scale-110'
-                    : currentAnswers[q.id]
-                    ? 'bg-primary/20 text-primary'
-                    : 'bg-secondary text-muted-foreground hover:bg-secondary/80'
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
+          {/* Quick navigation dots - scrollable on mobile */}
+          <div className="relative mt-8">
+            <div className="flex overflow-x-auto pb-2 gap-2 justify-start md:justify-center md:flex-wrap scrollbar-hide">
+              {currentQuestions.map((q, index) => (
+                <button
+                  key={q.id}
+                  onClick={() => setCurrentQuestionIndex(index)}
+                  className={`flex-shrink-0 w-8 h-8 rounded-full text-xs font-medium transition-all ${
+                    index === currentQuestionIndex
+                      ? 'hero-gradient text-primary-foreground scale-110'
+                      : currentAnswers[q.id]
+                      ? 'bg-primary/20 text-primary'
+                      : 'bg-secondary text-muted-foreground hover:bg-secondary/80'
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Completion message */}

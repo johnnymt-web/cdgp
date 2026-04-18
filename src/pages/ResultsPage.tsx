@@ -7,14 +7,17 @@ import SuperResultsReport from "@/components/SuperResultsReport";
 import { Button } from "@/components/ui/button";
 import { RIASECType } from "@/data/hollandQuestions";
 import { SuperDimension } from "@/data/superQuestions";
-import { RefreshCw, Share2, Compass, Target } from "lucide-react";
+import { RefreshCw, Share2, Compass, Target, Download, Printer, Mail } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { generatePDF, printResults, generateShareableText } from "@/utils/pdfExport";
+import EmailResultsDialog from "@/components/EmailResultsDialog";
 
 const ResultsPage = () => {
   const navigate = useNavigate();
   const [hollandScores, setHollandScores] = useState<Record<RIASECType, number> | null>(null);
   const [superScores, setSuperScores] = useState<Record<SuperDimension, number> | null>(null);
   const [activeTab, setActiveTab] = useState<'holland' | 'super' | 'combined'>('combined');
+  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
 
   const maxHollandScorePerType = 35; // 7 questions × 5 points
   const maxSuperScorePerDimension = 20; // 4 questions × 5 points
@@ -68,6 +71,37 @@ const ResultsPage = () => {
         description: "Share your results with friends.",
       });
     }
+  };
+
+  const handleExportPDF = async () => {
+    toast({
+      title: "Generating PDF...",
+      description: "Please wait while we create your report.",
+    });
+    
+    try {
+      await generatePDF({
+        hollandScores,
+        superScores,
+        maxHollandScore: maxHollandScorePerType,
+        maxSuperScore: maxSuperScorePerDimension,
+      });
+      
+      toast({
+        title: "PDF Downloaded!",
+        description: "Your career report has been saved.",
+      });
+    } catch (error) {
+      toast({
+        title: "Export Failed",
+        description: "There was an error generating your PDF. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handlePrint = () => {
+    printResults();
   };
 
   if (!hollandScores && !superScores) {
@@ -157,16 +191,37 @@ const ResultsPage = () => {
           )}
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12 animate-slide-up" style={{ animationDelay: '0.6s' }}>
-            <Button variant="hero" onClick={handleRetakeTest} className="group">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Retake Assessment
+          <div className="flex flex-wrap justify-center gap-3 mt-12 animate-slide-up no-print" style={{ animationDelay: '0.6s' }}>
+            <Button variant="hero" onClick={handleExportPDF} className="group">
+              <Download className="w-4 h-4 mr-2" />
+              Download PDF
+            </Button>
+            <Button variant="outline" onClick={() => setEmailDialogOpen(true)}>
+              <Mail className="w-4 h-4 mr-2" />
+              Email Results
+            </Button>
+            <Button variant="outline" onClick={handlePrint}>
+              <Printer className="w-4 h-4 mr-2" />
+              Print
             </Button>
             <Button variant="outline" onClick={handleShare}>
               <Share2 className="w-4 h-4 mr-2" />
-              Share Results
+              Share
+            </Button>
+            <Button variant="ghost" onClick={handleRetakeTest}>
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Retake
             </Button>
           </div>
+
+          {/* Email Dialog */}
+          <EmailResultsDialog
+            open={emailDialogOpen}
+            onOpenChange={setEmailDialogOpen}
+            hollandScores={hollandScores}
+            superScores={superScores}
+            maxSuperScore={maxSuperScorePerDimension}
+          />
 
           {/* Disclaimer */}
           <div className="mt-16 p-6 bg-secondary/50 rounded-xl text-center animate-fade-in" style={{ animationDelay: '0.8s' }}>

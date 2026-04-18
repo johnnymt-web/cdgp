@@ -143,6 +143,25 @@
   .glow-primary {
     box-shadow: var(--glow-primary);
   }
+
+  /* Hide scrollbar for navigation */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Safe area padding for mobile notches */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
 }
 
 @layer components {
@@ -187,5 +206,72 @@
       opacity: 1;
       transform: scale(1);
     }
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  nav, 
+  header nav,
+  .navbar,
+  button:not(.print-include),
+  .print-hide {
+    display: none !important;
+  }
+
+  main {
+    padding-top: 0 !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .card-shadow {
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  .hero-gradient,
+  .text-gradient {
+    background: none !important;
+    -webkit-text-fill-color: #0ea5e9 !important;
+    color: #0ea5e9 !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  .bg-card {
+    background: white !important;
+  }
+
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-scale-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  @page {
+    margin: 1.5cm;
+    size: A4;
   }
 }
